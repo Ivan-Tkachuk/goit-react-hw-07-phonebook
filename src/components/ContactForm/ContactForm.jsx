@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-
-import { addContact } from '../../redux/contactsSlice';
+import { selectContacts } from 'redux/selectors';
 
 import { Form, FormField, Field, Button } from './ContactForm.styled';
 import { nanoid } from 'nanoid';
 
+import { addContact } from 'redux/operations';
+
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.value);
+  const contacts = useSelector(selectContacts);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -31,8 +32,6 @@ export const ContactForm = () => {
       name,
       number,
     };
-
-    console.log(contacts);
 
     contacts.filter(contact => contact.name === name).length
       ? alert(`${newContact.name} is already in contacts`)
